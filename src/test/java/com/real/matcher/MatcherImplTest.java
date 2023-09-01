@@ -31,7 +31,8 @@ public class MatcherImplTest {
     try (var closer = new Closer()) {
       var moviesCsv = loadCsvFile(closer, "movies.csv");
       var actorsAndDirectorsCsv = loadCsvFile(closer, "actors_and_directors.csv");
-      var matcher = new MatcherImpl(moviesCsv, actorsAndDirectorsCsv);
+      MatcherFactory factory = new DefaultMatcherFactory();
+      var matcher = factory.createFactory(DatabaseType.XBOX, moviesCsv, actorsAndDirectorsCsv);
       var xboxCsv = loadCsvFile(closer, "xbox_feed.csv");
       idMappings = matcher.match(DatabaseType.XBOX, xboxCsv);
     }
